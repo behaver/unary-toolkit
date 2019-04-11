@@ -1,0 +1,36 @@
+{
+  "name": "@behaver/linear-solver",
+  "version": "1.0.0",
+  "description": "The pkg is builded for solving linear function.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/behaver/linear-solver.git"
+  },
+  "keywords": [
+    "linear",
+    "solver"
+  ],
+  "author": "Sanwan, Dong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/behaver/linear-solver/issues"
+  },
+  "homepage": "https://github.com/behaver/linear-solver#readme",
+  "files": [
+    "src"
+  ],
+  "devDependencies": {
+    "@behaver/celestial-coordinate": "^1.7.0",
+    "@behaver/jdate": "^2.3.2",
+    "@behaver/solar-star-coordinate": "^1.0.7",
+    "chai": "^4.2.0",
+    "mocha": "^6.1.2"
+  }
+}
