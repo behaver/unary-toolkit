@@ -1,5 +1,7 @@
 'use strict';
 
+const LinearDerivator = require('./LinearDerivator');
+
 /**
  * NewtonLinearSolver
  * 
@@ -15,14 +17,14 @@ class NewtonLinearSolver {
    * 
    * @param {Function} options.primitiveFunction 原函数
    * @param {Number}   options.originalX         x 初始值
-   * @param {Number}   options.differentialX     x 微分值
+   * @param {Number}   options.dx                x 微分值
    * @param {Number}   options.terminationError  终止误差
    * @param {Number}   options.maxIteration      最大迭代次数
    */
   constructor({
     primitiveFunction,
     originalX,
-    differentialX,
+    dx,
     terminationError,
     maxIteration,
   }) {
@@ -32,9 +34,14 @@ class NewtonLinearSolver {
 
     this.primitiveFunction = primitiveFunction;
     this.originalX = originalX || 0;
-    this.differentialX = differentialX || 1e-3;
     this.terminationError = terminationError || 1e-7;
     this.maxIteration = maxIteration || 50;
+
+    // 实例化线性函数微分器
+    this.LinearDerivator = new LinearDerivator({
+      primitiveFunction,
+      dx
+    })
   }
 
   /**
@@ -44,7 +51,11 @@ class NewtonLinearSolver {
    */
   set primitiveFunction(value) {
     if (typeof(value) !== 'function') throw Error('The param value should be a function.');
+    
     this.private.primitiveFunction = value;
+
+    // 同步更新微分器的原函数
+    if (this.LinearDerivator !== undefined) this.LinearDerivator.primitiveFunction = value;
   }
 
   /**
@@ -76,24 +87,21 @@ class NewtonLinearSolver {
   }
 
   /**
-   * 设定微分 x 值
+   * 设定 dx 微分值
    * 
-   * @param {Number} value 微分 x 值
+   * @param {Number} value dx 微分值
    */
-  set differentialX(value) {
-    if (typeof(value) !== 'number') throw Error('The param value should be a Number.');
-    if (value <= 0) throw Error('The param value should > 0.');
-
-    this.private.differentialX = value;
+  set dx(value) {
+    this.LinearDerivator.dx = value;
   }
 
   /**
-   * 获取微分 x 值
+   * 获取 dx 微分值
    * 
-   * @return {Number} 微分 x 值
+   * @return {Number} dx 微分值
    */
-  get differentialX() {
-    return this.private.differentialX;
+  get dx() {
+    return this.LinearDerivator.dx;
   }
 
   /**
@@ -171,7 +179,7 @@ class NewtonLinearSolver {
    * @return {Number} 当前梯度值
    */
   get gradient() {
-    return (this.primitiveFunction(this.x + this.differentialX) - this.primitiveFunction(this.x - this.differentialX)) / 2 / this.differentialX;
+    return this.LinearDerivator.get(this.x);
   }
 
   /**
