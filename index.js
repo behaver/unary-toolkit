@@ -1,9 +1,9 @@
 'use strict';
 
-const NewtonLinearSolver = require('./src/NewtonLinearSolver');
-const LinearDerivator = require('./src/LinearDerivator');
+const NewtonUnarySolver = require('./src/NewtonUnarySolver');
+const UnaryDerivator = require('./src/UnaryDerivator');
 
 module.exports = {
-  LinearDerivator,
-  NewtonLinearSolver,
+  UnaryDerivator,
+  NewtonUnarySolver,
 };

@@ -1,20 +1,20 @@
-# LinearSolver
+# UnarySolver
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](#) [![npm version](https://img.shields.io/npm/v/react.svg?style=flat)](https://www.npmjs.com/package/@behaver/linear-solver) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#)
+[![GitHub license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](#) [![npm version](https://img.shields.io/npm/v/react.svg?style=flat)](https://www.npmjs.com/package/@behaver/unary-solver) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#)
 
 ## 简介
 
-LinearSolver 是一个用于对连续线性函数局部求解的数学工具组件。
+UnarySolver 是一个用于对一元连续函数局部求解的数学工具组件。
 
 ## 安装
 
 通过 npm 安装，在你的 node 项目目录下执行：
 
-`npm install @behaver/linear-solver`
+`npm install @behaver/unary-solver`
 
 安装完成后，调用即可：
 
-`const { NewtonLinearSolver } = require('@behaver/linear-solver');`
+`const { NewtonUnarySolver } = require('@behaver/unary-solver');`
 
 ## 用例
 
@@ -22,17 +22,17 @@ LinearSolver 是一个用于对连续线性函数局部求解的数学工具组�
 const { HorizontalCoordinate, SystemSwitcher } = require('@behaver/celestial-coordinate');
 const { JDateRepository } = require('@behaver/jdate');
 
-const { NewtonLinearSolver } = require('../index');
+const { NewtonUnarySolver } = require('../index');
 
-/* 利用牛顿线性求解法，计算黄道圈与地平圈的上升交点 */
+/* 利用牛顿求解法，计算黄道圈与地平圈的上升交点 */
 
 let obGeoLong = -124.23,
     obGeoLat = 40.08,
     centerMode = 'geocentric',
     epoch = new JDateRepository(new Date(1992, 7, 15, 8, 25), 'date');
 
-// 构造用于求解的原始线性函数
-let linear = function(a) {
+// 构造用于求解的原始一元函数
+let unaryFunc = function(a) {
   let HC = new HorizontalCoordinate({
         a,
         h: 0,
@@ -48,8 +48,8 @@ let linear = function(a) {
 }
 
 // 实例化牛顿线性求解器
-let NLSolver = new NewtonLinearSolver({
-  primitiveFunction: linear,
+let NLSolver = new NewtonUnarySolver({
+  primitiveFunction: unaryFunc,
   originalX: 270,
   differentialX: 0.0003, // < 1分钟
   terminationError: 0.0002, // < 1″
