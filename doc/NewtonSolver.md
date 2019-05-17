@@ -51,10 +51,10 @@ let x = solver.x;
 
 构造函数:
 
-* `f` 求解函数
-* `dx` dx 值
-* `bias` 允许偏差范围
-* `maxIteration` 最大迭代次数
+* `options.f` 求解函数
+* `options.dx` dx 值
+* `options.bias` 允许偏差范围
+* `options.maxIteration` 最大迭代次数
 
 `solve(x)`
 

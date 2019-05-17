@@ -35,9 +35,9 @@ let res = df.get(Math.PI);
 
 构造函数:
 
-* `f` 原函数
-* `dx` dx 值
-* `direction` 求导方向
+* `options.f` 原函数
+* `options.dx` dx 值
+* `options.direction` 求导方向
 
 `get(x)`
 
