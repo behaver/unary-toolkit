@@ -1,51 +1,51 @@
 'use strict';
 
 /**
- * UnaryDerivator
+ * Derivator
  *
  * 一元微分求导器
  *
  * @author 董 三碗 <qianxing@yeah.net>
  * @version 1.1.0
  */
-class UnaryDerivator {
+class Derivator {
 
   /**
    * 构造函数
    * 
-   * @param {Function} options.primitiveFunction 原函数
-   * @param {Number}   options.dx                dx 值
-   * @param {String}   options.direction         求导方向
+   * @param {Function} options.f         原函数
+   * @param {Number}   options.dx        dx 值
+   * @param {String}   options.direction 求导方向
    */
   constructor({
-    primitiveFunction,
+    f,
     dx,
     direction,
   }) {
     this.private = {};
 
-    this.primitiveFunction = primitiveFunction;
+    this.f = f;
     this.dx = dx || 1e-3;
     this.direction = direction || 'right';
   }
 
   /**
-   * 设定原函数
+   * 设定 原函数
    * 
    * @param {Function} value 原函数
    */
-  set primitiveFunction(value) {
+  set f(value) {
     if (typeof(value) !== 'function') throw Error('The param value should be a function.');
-    this.private.primitiveFunction = value;
+    this.private.f = value;
   }
 
   /**
-   * 获取原函数
+   * 获取 原函数
    * 
    * @return {Function} 原函数
    */
-  get primitiveFunction() {
-    return this.private.primitiveFunction;
+  get f() {
+    return this.private.f;
   }
 
   /**
@@ -100,7 +100,7 @@ class UnaryDerivator {
     if (typeof(x) !== 'number') throw Error('The param x should be a Number.');
 
     let dx = this.dx,
-        f = this.primitiveFunction,
+        f = this.f,
         direction = this.direction;
 
     if (direction === 'right') {
@@ -113,4 +113,4 @@ class UnaryDerivator {
   }
 }
 
-module.exports = UnaryDerivator;
+module.exports = Derivator;

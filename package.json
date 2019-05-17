@@ -1,5 +1,5 @@
 {
-  "name": "@behaver/unary-solver",
+  "name": "@behaver/unary-toolkit",
   "version": "1.1.0",
   "description": "The pkg is builded for solving unary function.",
   "main": "index.js",
@@ -11,18 +11,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/behaver/unary-solver.git"
+    "url": "git+https://github.com/behaver/unary-toolkit.git"
   },
   "keywords": [
-    "unary",
-    "solver"
+    "unary"
   ],
   "author": "Sanwan, Dong",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/behaver/unary-solver/issues"
+    "url": "https://github.com/behaver/unary-toolkit/issues"
   },
-  "homepage": "https://github.com/behaver/unary-solver#readme",
+  "homepage": "https://github.com/behaver/unary-toolkit#readme",
   "files": [
     "src"
   ],

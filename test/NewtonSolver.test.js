@@ -6,9 +6,9 @@ const { SunCoordinate } = require('@behaver/solar-star-coordinate');
 const { HorizontalCoordinate, SystemSwitcher } = require('@behaver/celestial-coordinate');
 const { JDateRepository } = require('@behaver/jdate');
 
-const { NewtonUnarySolver } = require('../index');
+const { NewtonSolver } = require('../index');
 
-describe('#NewtonUnarySolver', () => {
+describe('#NewtonSolver', () => {
   describe('#Verify', () => {
     it('1992-08-15 08:25 124°23E 40°08N', () => {
       let obGeoLong = -124.23,
@@ -16,7 +16,7 @@ describe('#NewtonUnarySolver', () => {
           centerMode = 'geocentric';
 
       // 构造自变量为 jd 求解为 0 线性函数
-      let Unary = function (jd) {
+      let f = function (jd) {
         let SunPosition = new SunCoordinate(new JDateRepository(jd)),
             SunECC = SunPosition.get(),
             SS = new SystemSwitcher(SunECC),
@@ -32,15 +32,14 @@ describe('#NewtonUnarySolver', () => {
 
       let epoch = new JDateRepository(new Date(1992, 7, 15, 8, 25), 'date');
 
-      let NLSolver = new NewtonUnarySolver({
-        primitiveFunction: Unary,
-        originalX: epoch.JD,
-        differentialX: 0.0006, // < 1分钟
-        terminationError: 0.0002, // < 1″
+      let NLSolver = new NewtonSolver({
+        f: f,
+        dx: 0.0006, // < 1分钟
+        bias: 0.0002, // < 1″
       });
 
       // 执行求解
-      NLSolver.solve();
+      NLSolver.solve(epoch.JD);
 
       // console.log(NLSolver.x, NLSolver.stepNum, NLSolver.y, (new JDateRepository(NLSolver.x)).date.toLocaleString());
 
@@ -83,7 +82,7 @@ describe('#NewtonUnarySolver', () => {
           centerMode = 'geocentric',
           epoch = new JDateRepository(new Date(1992, 7, 15, 8, 25), 'date');
 
-      let Unary = function(a) {
+      let f = function(a) {
         let HC = new HorizontalCoordinate({
               a,
               h: 0,
@@ -98,15 +97,14 @@ describe('#NewtonUnarySolver', () => {
         return ECC.b.getDegrees();
       }
 
-      let NLSolver = new NewtonUnarySolver({
-        primitiveFunction: Unary,
-        originalX: 270,
-        differentialX: 0.0003, // < 1分钟
-        terminationError: 0.0002, // < 1″
+      let NLSolver = new NewtonSolver({
+        f: f,
+        dx: 0.0003, // < 1分钟
+        bias: 0.0002, // < 1″
       });
 
       // 执行求解
-      NLSolver.solve();
+      NLSolver.solve(270);
 
       console.log(NLSolver.x, NLSolver.y);
 
