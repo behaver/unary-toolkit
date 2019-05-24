@@ -101,15 +101,32 @@ class Derivator {
 
     let dx = this.dx,
         f = this.f,
-        direction = this.direction;
+        direction = this.direction,
+        f0,
+        f1;
 
-    if (direction === 'right') {
-      return (f(x + dx) - f(x)) / dx;
-    } else if (direction === 'left') {
-      return (f(x) - f(x - dx)) / dx;
-    } else if (direction === 'both') {
-      return (f(x + dx) - f(x - dx)) / 2 / dx;
+    // 方向求导处理
+    if (direction == 'right') {
+      f0 = f(x);
+      f1 = f(x + dx);
+    } else if (direction == 'left') {
+      f0 = f(x - dx);
+      f1 = f(x);
+    } else if (direction == 'both') {
+      f0 = f(x - dx);
+      f1 = f(x + dx);
+      dx = 2 * dx;
     }
+
+    // 结果类型判断处理
+    if (typeof(f0) === 'number') {
+      return (f1 - f0) / dx;
+    } else if (typeof(f0) === 'object') {
+      let res = {};
+      for (let item in f0) res[item] = (f1[item] - f0[item]) / dx;
+      return res;
+    } else throw Error('The return of f(x) should be valid.');
+
   }
 }
 
