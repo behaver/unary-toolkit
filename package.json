@@ -30,6 +30,6 @@
     "@behaver/jdate": "^2.3.2",
     "@behaver/solar-star-coordinate": "^1.0.7",
     "chai": "^4.2.0",
-    "mocha": "^6.1.2"
+    "mocha": "^10.2.0"
   }
 }
